@@ -1,0 +1,99 @@
+{
+  "title": "Greenfield Town",
+  "classification": {
+    "class_names": ["Garden", "Bakery", "Library"],
+    "documents": [
+      {"label": "Garden", "text": "gardeners water roses at dawn"},
+      {"label": "Garden", "text": "the garden gate opens at dawn"},
+      {"label": "Garden", "text": "fresh flowers grow in the garden"},
+      {"label": "Garden", "text": "gardeners plant seeds in spring"},
+      {"label": "Bakery", "text": "fresh bread warms the bakery"},
+      {"label": "Bakery", "text": "the baker sells cakes and bread"},
+      {"label": "Bakery", "text": "warm bread smells good in the morning"},
+      {"label": "Bakery", "text": "cakes and cookies fill the bakery"},
+      {"label": "Library", "text": "readers borrow books from the library"},
+      {"label": "Library", "text": "the librarian reads in the garden"},
+      {"label": "Library", "text": "quiet readers study in the library"},
+      {"label": "Library", "text": "books and readers fill the library"}
+    ],
+    "new_documents": [
+      "fresh bread and cakes",
+      "readers visit the quiet library"
+    ],
+    "order_examples": ["garden gate opens", "opens gate garden"]
+  },
+  "embedding": {
+    "lines": [
+      "the gardener waters the roses",
+      "the baker bakes the bread",
+      "the librarian reads the books",
+      "the gardener visits the garden",
+      "the baker visits the bakery",
+      "the librarian visits the library",
+      "the gardener opens the gate",
+      "the baker opens the oven",
+      "the librarian opens the book",
+      "the gardener grows roses",
+      "the baker sells cakes",
+      "the librarian borrows books",
+      "roses grow in the garden",
+      "bread warms in the bakery",
+      "books rest in the library",
+      "the garden gate opens at dawn"
+    ],
+    "query_words": ["gardener", "baker"],
+    "window_size": 2,
+    "embedding_dim": 12,
+    "steps": 350,
+    "learning_rate": 0.04
+  },
+  "bpe": {
+    "corpus": [
+      "garden garden gate garden opens",
+      "gardener waters the garden",
+      "bakery bread cakes"
+    ],
+    "vocab_size": 50,
+    "probe_words": ["garden", "garden7"]
+  },
+  "language_model": {
+    "n": 3,
+    "train_text": "the garden gate opens at dawn the garden gate opens at dusk the librarian reads in the garden the garden path leads home",
+    "test_text": "the garden gate opens at dusk",
+    "known_context": ["the", "garden"],
+    "unknown_context": ["silent", "garden"],
+    "generation_context": ["the", "garden"],
+    "generation_length": 5
+  },
+  "evaluation": {
+    "reference": "the garden gate opens at dawn",
+    "candidates": [
+      {"name": "A", "text": "the gate opens at dawn near garden"},
+      {"name": "B", "text": "books rest in a quiet library"}
+    ],
+    "elo_names": ["Garden-LM", "Bakery-LM", "Library-LM"],
+    "elo_matches": [
+      ["Garden-LM", "Bakery-LM", 1.0],
+      ["Garden-LM", "Library-LM", 0.0],
+      ["Bakery-LM", "Library-LM", 1.0]
+    ]
+  },
+  "portfolio": {
+    "document": "fresh bread and cakes",
+    "embedding_word": "gardener",
+    "bpe_word": "garden7",
+    "lm_context": ["the", "garden"],
+    "num_tokens": 5,
+    "candidate_name": "A"
+  },
+  "sandbox": {
+    "document": "zephyrs quizzically",
+    "embedding_word": "unseenword",
+    "bpe_word": "",
+    "lm_context": ["silent", "garden"],
+    "num_tokens": 3,
+    "perplexity_tokens": [],
+    "candidate": "",
+    "reference": ""
+  }
+}
